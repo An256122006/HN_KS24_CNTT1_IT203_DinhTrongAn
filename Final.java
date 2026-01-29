@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Final {
     public static void displaystudent(String[] student, int n) {
@@ -66,6 +68,29 @@ public class Final {
         }
         return n-1;
     }
+    public static void search(String [] student,int n){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Moi ban nhap Ma sinh vien:");
+        String newstudent = sc.nextLine();
+        String regex = ".*" + Pattern.quote(newstudent) + ".*";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+
+        System.out.println("Các MSSV phù hợp:");
+        boolean found = false;
+
+        for (String mssv : student) {
+            Matcher matcher = pattern.matcher(mssv);
+            if (matcher.matches()) {
+                System.out.println(mssv);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Không tìm thấy MSSV nào.");
+        }
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String choice = "";
@@ -77,6 +102,7 @@ public class Final {
             System.out.println("2. Thêm mới (Có Regex)");
             System.out.println("3. Cập nhật");
             System.out.println("4. Xóa");
+            System.out.println("5. search");
             System.out.println("0. Thoat");
             System.out.println("================================");
             System.out.print("Chon chuc nang: ");
@@ -94,6 +120,11 @@ public class Final {
                 case "4":
                     n=deleteStudent(student,n);
                     break;
+                case "5":
+                    search(student,n);
+                    break;
+                case "0":
+                    return;
                 default:
                     System.out.println("khong hop le");
                     break;
